@@ -1,6 +1,8 @@
 <?php
 
-namespace Cexll\Helper;
+declare(strict_types=1);
+
+namespace Cexll\Utils\Helper;
 
 class JsonHelper
 {
