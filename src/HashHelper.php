@@ -13,7 +13,7 @@ class HashHelper
      * @param mixed $algo
      * @return string
      */
-    public static function hash(string $password, mixed $algo = PASSWORD_DEFAULT): string
+    public static function hash(string $password, $algo = PASSWORD_DEFAULT): string
     {
         return password_hash($password, $algo);
     }
