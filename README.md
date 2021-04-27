@@ -1,12 +1,14 @@
 # Install 
 
-```
+```php
 composer require cexll/utils-helper
 ```
 
 # Run
 
-```
+```php
+<?php
+
 use Cexll\Utils\Helper;
 
 echo HashHelper::hash('123456');
