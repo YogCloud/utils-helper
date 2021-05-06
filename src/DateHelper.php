@@ -356,4 +356,12 @@ class DateHelper
         ];
         return $array[$key] ?? null;
     }
+    
+    public static function timeToDate($time = ''): string
+    {
+        if (!$time) {
+            $time = time();
+        }
+        return date('Y-m-d H:i:s', $time);
+    }
 }
