@@ -260,7 +260,7 @@ class StringHelper
      */
     public static function highRandomString(int $len = 12): string
     {
-        return bin2hex(random_bytes((int)$len / 2));
+        return bin2hex(random_bytes((int)($len / 2)));
     }
 
     /**
