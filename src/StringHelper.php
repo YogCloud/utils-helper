@@ -343,14 +343,14 @@ class StringHelper
 
         //位数过长重复字符串一定次数
         $charLen = mb_strlen($chars, 'UTF-8');
-        $diff = $len / $charLen;
+        $diff = (int)($len / $charLen);
         if ($diff > 1) {
-            $chars = str_repeat($chars, ceil($diff));
+            $chars = str_repeat($chars, (int)ceil($diff));
         }
 
         if ($type === 5) { // 中文随机字
             for ($i = 0; $i < $len; ++$i) {
-                $str .= mb_substr($chars, floor(random_int(0, $charLen - 1)), 1, 'UTF-8');
+                $str .= mb_substr($chars, (int)floor(random_int(0, $charLen - 1)), 1, 'UTF-8');
             }
         } else {
             $chars = str_shuffle($chars);
@@ -1398,7 +1398,7 @@ class StringHelper
     public static function getRandomOrderSN(string $prefix = 'DD', int $unique = 0): string
     {
         if ($unique !== 0) {
-            $len = (int)(16 - strlen($unique));
+            $len = (int)(16 - strlen((string)$unique));
             return  $prefix . date('YmdHis') . NumberHelper::highGenerateNumber($len) . $unique;
         }
 
