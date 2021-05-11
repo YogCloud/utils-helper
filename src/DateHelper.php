@@ -356,12 +356,24 @@ class DateHelper
         ];
         return $array[$key] ?? null;
     }
-    
+
     public static function timeToDate($time = ''): string
     {
         if (!$time) {
             $time = time();
         }
         return date('Y-m-d H:i:s', $time);
+    }
+
+    /**
+     * 计算开始时间与结束时间的间隔天数
+     *
+     * @param integer $startTime
+     * @param integer $endTime
+     * @return integer
+     */
+    public static function calcDateInterval(int $startTime, int $endTime): int
+    {
+        return (int)(($endTime - $startTime) / 60 / 60 / 24);
     }
 }
