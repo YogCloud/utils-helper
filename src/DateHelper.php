@@ -88,12 +88,12 @@ class DateHelper
         }
 
         $hours = floor($second / 3600);
-        $hours = $hours ? str_pad((string)$hours, 2, '0', STR_PAD_LEFT) : 0;
+        $hours = $hours ? str_pad((string) $hours, 2, '0', STR_PAD_LEFT) : 0;
         $second %= 3600;
         $minutes = floor($second / 60);
-        $minutes = str_pad((string)$minutes, 2, '0', STR_PAD_LEFT);
+        $minutes = str_pad((string) $minutes, 2, '0', STR_PAD_LEFT);
         $seconds = $second % 60;
-        $seconds = str_pad((string)$seconds, 2, '0', STR_PAD_LEFT);
+        $seconds = str_pad((string) $seconds, 2, '0', STR_PAD_LEFT);
 
         return implode(':', $hours ? compact('hours', 'minutes', 'seconds') : compact('minutes', 'seconds'));
     }
@@ -130,7 +130,7 @@ class DateHelper
             $datetime = (string) $datetime;
         }
 
-        if (!ValidateHelper::isDate2time($datetime)) {
+        if (! ValidateHelper::isDate2time($datetime)) {
             return $res;
         }
 
@@ -240,7 +240,7 @@ class DateHelper
             $datetime = (string) $datetime;
         }
 
-        if (!ValidateHelper::isDate2time($datetime)) {
+        if (! ValidateHelper::isDate2time($datetime)) {
             return $res;
         }
 
@@ -315,7 +315,7 @@ class DateHelper
             $datetime = (string) $datetime;
         }
 
-        if (!ValidateHelper::isDate2time($datetime)) {
+        if (! ValidateHelper::isDate2time($datetime)) {
             return $res;
         }
 
@@ -359,22 +359,50 @@ class DateHelper
 
     public static function timeToDate($time = ''): string
     {
-        if (!$time) {
+        if (! $time) {
             $time = time();
         }
         return date('Y-m-d H:i:s', $time);
     }
 
     /**
-     * 计算开始时间与结束时间的间隔天数
-     *
-     * @param integer $startTime
-     * @param integer $endTime
-     * @return integer
+     * 计算开始时间与结束时间的间隔天数.
      */
     public static function calcDateInterval(int $startTime, int $endTime): int
     {
-        return (int)(($endTime - $startTime) / 60 / 60 / 24);
+        return (int) (($endTime - $startTime) / 60 / 60 / 24);
     }
 
+    /**
+     * 蔡勒公式.
+     * @param string $datetime // Y-m-d H:i:s
+     */
+    public static function datetimeToWeek(string $datetime): string
+    {
+        $year = (int) substr($datetime, 0, 4);
+        $month = (int) substr($datetime, 5, 2);
+        $day = (int) substr($datetime, 8, 2);
+        $c = $year % 100;
+        $week = ($year + ($year / 4) + ($c / 4) - $c * 2 + ((26 * ($month + 1)) / 10) + $day - 1) % 7;
+        return self::numberToWeek($week);
+    }
+
+    /**
+     * 基姆拉尔森公式.
+     * @param string $datetime // Y-m-d H:i:s
+     */
+    public static function datetimeToWeek2(string $datetime): string
+    {
+        $year = (int) substr($datetime, 0, 4);
+        $month = (int) substr($datetime, 5, 2);
+        $day = (int) substr($datetime, 8, 2);
+        $week = ($day + 2 * $month + 3 * ($month + 1) / 5 + $year + $year / 4 - $year / 100 + $year / 400) % 7;
+        return self::numberToWeek($week + 1);
+    }
+
+    private static function numberToWeek(int $num): string
+    {
+        $arr = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+        return $arr[$num];
+    }
 }
