@@ -6,7 +6,8 @@ namespace Cexll\Utils\Helper;
 
 class NumberHelper
 {
-    const UNKNOWN = 'Unknown'; //未知字符串
+    public const UNKNOWN = 'Unknown'; //未知字符串
+
     /**
      * 格式化文件比特大小.
      *
@@ -120,8 +121,7 @@ class NumberHelper
     /**
      * 生成高性能随机数值
      *
-     * @param integer $len 数字长度
-     * @return int
+     * @param int $len 数字长度
      */
     public static function highGenerateNumber(int $len = 5): int
     {

@@ -17,7 +17,7 @@ class ArrayHelper
     {
         $keyArr = [];
         foreach ($arr as $subArr) {
-            if (!is_array($subArr) || !isset($subArr[$sortKey])) {
+            if (! is_array($subArr) || ! isset($subArr[$sortKey])) {
                 return [];
             }
             $keyArr[] = $subArr[$sortKey];
@@ -36,7 +36,7 @@ class ArrayHelper
         $hasArr = $res = [];
         foreach ($arr as $k => $v) {
             $hash = md5(serialize($v));
-            if (!in_array($hash, $hasArr, true)) {
+            if (! in_array($hash, $hasArr, true)) {
                 $hasArr[] = $hash;
                 if ($keepKey) {
                     $res[$k] = $v;
@@ -90,7 +90,7 @@ class ArrayHelper
         $arr = is_object($val) ? get_object_vars($val) : $val;
         if (is_array($arr)) {
             foreach ($arr as $k => $item) {
-                if (is_array($item) && !empty($item)) {
+                if (is_array($item) && ! empty($item)) {
                     $arr[$k] = array_map(__METHOD__, $item);
                 }
             }
@@ -191,13 +191,13 @@ class ArrayHelper
         if ($unique) {
             for ($i = 1; $i <= $len; ++$i) {
                 $news = self::_combinationValue($arr, $i, $separator);
-                if (!empty($news)) {
+                if (! empty($news)) {
                     $res = array_merge(...$news);
                 }
             }
         } else {
             $news = self::_combinationPosition($arr, $separator);
-            if (!empty($news)) {
+            if (! empty($news)) {
                 $res = array_merge($res, $news);
             }
             $res = array_unique($res);
@@ -288,7 +288,7 @@ class ArrayHelper
         $values = [];
         $sort = strtolower(trim($sort));
         foreach ($arr as $k => $v) {
-            if (!isset($v[$key])) {
+            if (! isset($v[$key])) {
                 return [];
             }
             $values[$k] = $v[$key];
@@ -320,7 +320,7 @@ class ArrayHelper
         if (empty($arr)) {
             return [];
         }
-        if (!empty($sorts)) {
+        if (! empty($sorts)) {
             $sortConditions = [];
             foreach ($sorts as $sortInfo) {
                 //$sortInfo必须形如['field', SORT_ASC],或者['field']
@@ -329,7 +329,7 @@ class ArrayHelper
                 $tmpArr = [];
                 foreach ($arr as $k => $item) {
                     //排序字段不存在
-                    if (empty($file) || !isset($item[$file])) {
+                    if (empty($file) || ! isset($item[$file])) {
                         return [];
                     }
                     $tmpArr[$k] = $item[$file];
@@ -383,9 +383,9 @@ class ArrayHelper
         $keys = explode('.', $keyStr);
         while (count($keys) > 1) {
             $key = array_shift($keys);
-            if (!array_key_exists($key, $arr)) {
+            if (! array_key_exists($key, $arr)) {
                 $arr[$key] = [];
-            } elseif (!is_array($arr[$key])) {
+            } elseif (! is_array($arr[$key])) {
                 $arr[$key] = (array) $arr[$key];
             }
             $arr = &$arr[$key];
@@ -441,7 +441,7 @@ class ArrayHelper
             if (is_null($_key) || $_key === '') {
                 return false;
             }
-            if (!is_array($arr) || !array_key_exists($_key, $arr)) {
+            if (! is_array($arr) || ! array_key_exists($_key, $arr)) {
                 return false;
             }
             $arr = $arr[$_key];
@@ -521,7 +521,7 @@ class ArrayHelper
                 $newArr = $arr;
                 self::cutItems($newArr, $k);
                 $newRes = self::_combinationPosition($newArr, $separator);
-                if (!empty($newRes)) {
+                if (! empty($newRes)) {
                     $res = array_merge(...$newRes);
                 }
             }

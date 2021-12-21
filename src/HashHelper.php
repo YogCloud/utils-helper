@@ -7,11 +7,9 @@ namespace Cexll\Utils\Helper;
 class HashHelper
 {
     /**
-     * hash password
+     * hash password.
      *
-     * @param string $password
      * @param mixed $algo
-     * @return string
      */
     public static function hash(string $password, $algo = PASSWORD_DEFAULT): string
     {
@@ -19,11 +17,7 @@ class HashHelper
     }
 
     /**
-     * verify password 
-     *
-     * @param string $password
-     * @param string $hash
-     * @return boolean
+     * verify password.
      */
     public static function verify(string $password, string $hash): bool
     {

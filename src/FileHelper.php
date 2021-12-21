@@ -30,9 +30,9 @@ class FileHelper
     public static function writeFile(string $file, string $data, bool $append = false, int $mode = 0766): bool
     {
         $res = false;
-        if (!empty($file) && !empty($data)) {
+        if (! empty($file) && ! empty($data)) {
             $dir = dirname($file);
-            if (!is_dir($dir) && !mkdir($dir, 0766, true) && !is_dir($dir)) {
+            if (! is_dir($dir) && ! mkdir($dir, 0766, true) && ! is_dir($dir)) {
                 throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir));
             }
 
@@ -69,7 +69,7 @@ class FileHelper
     {
         //if the zip file already exists and overwrite is false, return false
         $exist = file_exists($destination);
-        if ($exist && !$overwrite) {
+        if ($exist && ! $overwrite) {
             return false;
         }
 
@@ -116,7 +116,7 @@ class FileHelper
     public static function img2Base64(string $file): string
     {
         $res = '';
-        if (empty($file) || !file_exists($file)) {
+        if (empty($file) || ! file_exists($file)) {
             return $res;
         }
 
@@ -387,7 +387,7 @@ class FileHelper
      */
     public static function readInArray(string $path): array
     {
-        if (!is_file($path)) {
+        if (! is_file($path)) {
             return [];
         }
 

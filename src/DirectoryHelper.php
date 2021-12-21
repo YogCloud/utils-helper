@@ -67,7 +67,7 @@ class DirectoryHelper
     public static function getDirSize(string $path): int
     {
         $size = 0;
-        if ($path === '' || !is_dir($path)) {
+        if ($path === '' || ! is_dir($path)) {
             return $size;
         }
 
@@ -95,7 +95,7 @@ class DirectoryHelper
      */
     public static function copyDir(string $from, string $dest, bool $cover = false): bool
     {
-        if (!file_exists($dest) && !mkdir($dest, 0766, true) && !is_dir($dest)) {
+        if (! file_exists($dest) && ! mkdir($dest, 0766, true) && ! is_dir($dest)) {
             return false;
         }
 
@@ -103,11 +103,11 @@ class DirectoryHelper
         while (($fileName = @readdir($dh)) !== false) {
             if (($fileName !== '.') && ($fileName !== '..')) {
                 $newFile = "{$dest}/{$fileName}";
-                if (!is_dir("{$from}/{$fileName}")) {
-                    if (!$cover & file_exists($newFile)) {
+                if (! is_dir("{$from}/{$fileName}")) {
+                    if (! $cover & file_exists($newFile)) {
                         continue;
                     }
-                    if (!copy("{$from}/{$fileName}", $newFile)) {
+                    if (! copy("{$from}/{$fileName}", $newFile)) {
                         return false;
                     }
                 } else {
@@ -134,7 +134,7 @@ class DirectoryHelper
         }
 
         if (is_dir($path)) {
-            if (!@chmod($path, $dirmode)) {
+            if (! @chmod($path, $dirmode)) {
                 return;
             }
             $dh = @opendir($path);
@@ -145,7 +145,7 @@ class DirectoryHelper
                 }
             }
             @closedir($dh);
-        } elseif (!is_link($path)) {
+        } elseif (! is_link($path)) {
             @chmod($path, $filemode);
         }
     }
@@ -177,7 +177,7 @@ class DirectoryHelper
      */
     public static function clearDir(string $path): bool
     {
-        if (empty($path) || !is_dir($path)) {
+        if (empty($path) || ! is_dir($path)) {
             return false;
         }
 

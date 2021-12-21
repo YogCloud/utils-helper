@@ -8,12 +8,12 @@ class ValidateHelper
 {
     public static function isInteger($val, bool $bigInt = false): bool
     {
-        if (!is_numeric($val)) {
+        if (! is_numeric($val)) {
             return false;
         }
 
         //php范围内的整数
-        if (!$bigInt && is_float($val + 0) && ($val + 0) > PHP_INT_MAX) {
+        if (! $bigInt && is_float($val + 0) && ($val + 0) > PHP_INT_MAX) {
             return false;
         }
 
@@ -47,7 +47,7 @@ class ValidateHelper
      */
     public static function isEven($val): bool
     {
-        return self::isInteger($val) && boolval(!(intval($val) & 1));
+        return self::isInteger($val) && boolval(! (intval($val) & 1));
     }
 
     /**
@@ -72,7 +72,7 @@ class ValidateHelper
      */
     public static function isBinary(string $val): bool
     {
-        return !empty($val) && preg_match(RegularHelper::$patternBinary, $val);
+        return ! empty($val) && preg_match(RegularHelper::$patternBinary, $val);
     }
 
     /**
@@ -92,7 +92,7 @@ class ValidateHelper
      */
     public static function isMobilecn(string $val): bool
     {
-        return !empty($val) && preg_match(RegularHelper::$patternMobilecn, $val);
+        return ! empty($val) && preg_match(RegularHelper::$patternMobilecn, $val);
     }
 
     /**
@@ -100,7 +100,7 @@ class ValidateHelper
      */
     public static function isTel(string $val): bool
     {
-        return !empty($val) && (preg_match(RegularHelper::$patternTel, $val) || preg_match(RegularHelper::$patternTel4800, $val));
+        return ! empty($val) && (preg_match(RegularHelper::$patternTel, $val) || preg_match(RegularHelper::$patternTel4800, $val));
     }
 
     /**
@@ -126,7 +126,7 @@ class ValidateHelper
      */
     public static function isUrl(string $val): bool
     {
-        return !empty($val) && filter_var($val, FILTER_VALIDATE_URL) && preg_match(RegularHelper::$patternUrl, $val);
+        return ! empty($val) && filter_var($val, FILTER_VALIDATE_URL) && preg_match(RegularHelper::$patternUrl, $val);
     }
 
     /**
@@ -173,12 +173,12 @@ class ValidateHelper
         ];
 
         //18位或15位
-        if (empty($val) || !preg_match(RegularHelper::$patternCnIdNo, $val)) {
+        if (empty($val) || ! preg_match(RegularHelper::$patternCnIdNo, $val)) {
             return false;
         }
 
         //省市代码
-        if (!array_key_exists(substr($val, 0, 2), $city)) {
+        if (! array_key_exists(substr($val, 0, 2), $city)) {
             return false;
         }
 
@@ -221,7 +221,7 @@ class ValidateHelper
      */
     public static function isUtf8(string $val): bool
     {
-        if (!empty($val)) {
+        if (! empty($val)) {
             return mb_detect_encoding($val, 'UTF-8', true) === 'UTF-8';
         }
 
@@ -233,7 +233,7 @@ class ValidateHelper
      */
     public static function isAscii(string $val): bool
     {
-        if (!empty($val)) {
+        if (! empty($val)) {
             return mb_detect_encoding($val, 'ASCII', true) === 'ASCII';
         }
         return true;
@@ -244,7 +244,7 @@ class ValidateHelper
      */
     public static function isChinese(string $val): bool
     {
-        return !empty($val) && @preg_match(RegularHelper::$patternAllChinese, $val);
+        return ! empty($val) && @preg_match(RegularHelper::$patternAllChinese, $val);
     }
 
     /**
@@ -252,7 +252,7 @@ class ValidateHelper
      */
     public static function hasChinese(string $val): bool
     {
-        return !empty($val) && @preg_match(RegularHelper::$patternHasChinese, $val);
+        return ! empty($val) && @preg_match(RegularHelper::$patternHasChinese, $val);
     }
 
     /**
@@ -260,7 +260,7 @@ class ValidateHelper
      */
     public static function isAlpha(string $val): bool
     {
-        return !empty($val) && @preg_match(RegularHelper::$patternAlpha, $val);
+        return ! empty($val) && @preg_match(RegularHelper::$patternAlpha, $val);
     }
 
     /**
@@ -284,7 +284,7 @@ class ValidateHelper
      */
     public static function isAlphaChinese(string $val): bool
     {
-        return !empty($val) && @preg_match(RegularHelper::$patternAlphaChinese, $val);
+        return ! empty($val) && @preg_match(RegularHelper::$patternAlphaChinese, $val);
     }
 
     /**
@@ -330,7 +330,7 @@ class ValidateHelper
      */
     public static function hasLetter(string $val): bool
     {
-        return !empty($val) && @preg_match(RegularHelper::$patternHasLetter, $val);
+        return ! empty($val) && @preg_match(RegularHelper::$patternHasLetter, $val);
     }
 
     /**
@@ -338,7 +338,7 @@ class ValidateHelper
      */
     public static function isUpperLetter(string $val): bool
     {
-        return !empty($val) && ctype_upper($val);
+        return ! empty($val) && ctype_upper($val);
     }
 
     /**
@@ -346,7 +346,7 @@ class ValidateHelper
      */
     public static function isLowerLetter(string $val): bool
     {
-        return !empty($val) && ctype_lower($val);
+        return ! empty($val) && ctype_lower($val);
     }
 
     /**
@@ -378,7 +378,7 @@ class ValidateHelper
      */
     public static function isWord(string $val): bool
     {
-        return !empty($val) && preg_match(RegularHelper::$patternWord, $val);
+        return ! empty($val) && preg_match(RegularHelper::$patternWord, $val);
     }
 
     /**
@@ -401,7 +401,7 @@ class ValidateHelper
 
         $val = str_replace('/', '-', $val);
         $check = preg_match(RegularHelper::$patternDatetime, $val);
-        if (!$check) {
+        if (! $check) {
             return 0;
         }
 
@@ -410,7 +410,7 @@ class ValidateHelper
         $unixTime = strtotime($val);
 
         //检查日期
-        if (!$unixTime || date('Y-m-d', $unixTime) != $date) {
+        if (! $unixTime || date('Y-m-d', $unixTime) != $date) {
             $unixTime = 0;
         }
 
@@ -493,11 +493,11 @@ class ValidateHelper
      */
     public static function isBase64Image(string $val)
     {
-        if (empty($val) || !stripos($val, 'base64')) {
+        if (empty($val) || ! stripos($val, 'base64')) {
             return false;
         }
 
-        if (!preg_match(RegularHelper::$patternBase64Image, $val, $match)) {
+        if (! preg_match(RegularHelper::$patternBase64Image, $val, $match)) {
             return false;
         }
 
@@ -537,7 +537,7 @@ class ValidateHelper
      */
     public static function isIPv4(string $val): bool
     {
-        return !empty($val) && filter_var($val, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) == true;
+        return ! empty($val) && filter_var($val, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) == true;
     }
 
     /**
@@ -545,7 +545,7 @@ class ValidateHelper
      */
     public static function isIPv6(string $val): bool
     {
-        return !empty($val) && filter_var($val, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) == true;
+        return ! empty($val) && filter_var($val, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) == true;
     }
 
     /**
@@ -584,7 +584,7 @@ class ValidateHelper
      */
     public static function isQQ(string $val): bool
     {
-        return !empty($val) && preg_match(RegularHelper::$patternQQNo, $val);
+        return ! empty($val) && preg_match(RegularHelper::$patternQQNo, $val);
     }
 
     /**
@@ -596,7 +596,7 @@ class ValidateHelper
     public static function isIndexArray($arr): bool
     {
         $res = false;
-        if (is_array($arr) && !empty($arr)) {
+        if (is_array($arr) && ! empty($arr)) {
             $str = implode('', array_keys($arr));
             $str = str_replace('-', '', $str); //处理多个负数索引
             $res = boolval(preg_match(RegularHelper::$patternInteger, $str));
@@ -614,7 +614,7 @@ class ValidateHelper
     public static function isAssocArray($arr): bool
     {
         $res = false;
-        if (is_array($arr) && !empty($arr)) {
+        if (is_array($arr) && ! empty($arr)) {
             $res = count(array_filter(array_keys($arr), 'is_string')) > 0;
         }
 
@@ -646,7 +646,7 @@ class ValidateHelper
         $res = is_array($arr);
         if ($res) {
             foreach ($arr as $item) {
-                if (is_array($item) && !empty($item)) {
+                if (is_array($item) && ! empty($item)) {
                     $res = false;
                     break;
                 }

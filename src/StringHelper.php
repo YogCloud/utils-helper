@@ -253,14 +253,11 @@ class StringHelper
     }
 
     /**
-     * 高性能随机字符串
-     *
-     * @param integer $len
-     * @return string
+     * 高性能随机字符串.
      */
     public static function highRandomString(int $len = 12): string
     {
-        return bin2hex(random_bytes((int)($len / 2)));
+        return bin2hex(random_bytes((int) ($len / 2)));
     }
 
     /**
@@ -337,20 +334,20 @@ class StringHelper
                 break;
         }
 
-        if (!empty($addChars)) {
+        if (! empty($addChars)) {
             $chars .= $addChars;
         }
 
         //位数过长重复字符串一定次数
         $charLen = mb_strlen($chars, 'UTF-8');
-        $diff = (int)($len / $charLen);
+        $diff = (int) ($len / $charLen);
         if ($diff > 1) {
-            $chars = str_repeat($chars, (int)ceil($diff));
+            $chars = str_repeat($chars, (int) ceil($diff));
         }
 
         if ($type === 5) { // 中文随机字
             for ($i = 0; $i < $len; ++$i) {
-                $str .= mb_substr($chars, (int)floor(random_int(0, $charLen - 1)), 1, 'UTF-8');
+                $str .= mb_substr($chars, (int) floor(random_int(0, $charLen - 1)), 1, 'UTF-8');
             }
         } else {
             $chars = str_shuffle($chars);
@@ -380,7 +377,7 @@ class StringHelper
             $res = html_entity_decode($res);
         }
 
-        if (!$hasBodyTag) {
+        if (! $hasBodyTag) {
             $res = preg_replace('/<(!DOCTYPE.*?)>/is', '', $res);
             $res = preg_replace('/<(\\/?(html|body).*?)>/is', '', $res);
         }
@@ -487,7 +484,7 @@ class StringHelper
     public static function getFirstLetter(string $str): string
     {
         $res = '';
-        if (!empty($str)) {
+        if (! empty($str)) {
             $firstChar = ord(strtoupper($str[0]));
             if ($firstChar >= 65 && $firstChar <= 91) {
                 return strtoupper($str[0]);
@@ -576,7 +573,7 @@ class StringHelper
     public static function matchImages(string $html): array
     {
         $images = [];
-        if (!empty($html)) {
+        if (! empty($html)) {
             preg_match_all('/<img.*src=(.*)[>|\\s]/iU', $html, $matchs);
             if (isset($matchs[1]) && count($matchs[1]) > 0) {
                 foreach ($matchs[1] as $v) {
@@ -987,7 +984,7 @@ class StringHelper
             $r0 = mb_substr($str, 0, 1);
             $str = mb_substr($str, 1);
 
-            if (!self::isCaseConnector($r0)) {
+            if (! self::isCaseConnector($r0)) {
                 $r0 = strtoupper($r0);
                 break;
             }
@@ -1100,7 +1097,7 @@ class StringHelper
 
         $i = $ignoreCase ? mb_stripos($str, $after) : mb_strpos($str, $after);
         if ($i !== false) {
-            if (!$include) {
+            if (! $include) {
                 $i += mb_strlen($after);
             }
             $str = mb_substr($str, 0, $i);
@@ -1217,8 +1214,8 @@ class StringHelper
     public static function uuidV4(): string
     {
         $data = random_bytes(16);
-        $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
-        $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
+        $data[6] = chr(ord($data[6]) & 0x0F | 0x40);
+        $data[8] = chr(ord($data[8]) & 0x3F | 0x80);
         return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
     }
 
@@ -1253,7 +1250,7 @@ class StringHelper
         }
 
         // 如果提供了开始定界符
-        if ($begin !== '' && !is_null($begin)) {
+        if ($begin !== '' && ! is_null($begin)) {
             // 计算开始定界符的出现位置
             $beginPos = mb_stripos($str, $begin);
 
@@ -1289,6 +1286,22 @@ class StringHelper
     }
 
     /**
+     * 生成订单号.
+     *
+     * @param string $prefix 订单前缀, 例: YM20210220ASD451200
+     * @param string $unique 唯一标识 可填用户ID, 可不填
+     */
+    public static function getRandomOrderSN(string $prefix = 'DD', int $unique = 0): string
+    {
+        if ($unique !== 0) {
+            $len = (int) (16 - strlen((string) $unique));
+            return $prefix . date('YmdHis') . NumberHelper::highGenerateNumber($len) . $unique;
+        }
+
+        return $prefix . date('YmdHis') . NumberHelper::highGenerateNumber(16);
+    }
+
+    /**
      * 是否字符转换连接符.
      *
      * @param string
@@ -1321,7 +1334,7 @@ class StringHelper
 
             switch ($r0) {
                 case ValidateHelper::isUpperLetter($r0):
-                    if ($prev !== $connector && !is_numeric($prev)) {
+                    if ($prev !== $connector && ! is_numeric($prev)) {
                         $res[] = $connector;
                     }
 
@@ -1334,7 +1347,7 @@ class StringHelper
                     $r0 = mb_substr($str, 0, 1);
                     $str = mb_substr($str, 1);
 
-                    if (!ValidateHelper::isUpperLetter($r0)) {
+                    if (! ValidateHelper::isUpperLetter($r0)) {
                         $res[] = $r0;
                         break;
                     }
@@ -1344,7 +1357,7 @@ class StringHelper
                         $r0 = mb_substr($str, 0, 1);
                         $str = mb_substr($str, 1);
 
-                        if (!ValidateHelper::isUpperLetter($r0)) {
+                        if (! ValidateHelper::isUpperLetter($r0)) {
                             if (self::isCaseConnector($r0)) {
                                 $r0 = $connector;
                                 $res[] = strtolower($r1);
@@ -1370,7 +1383,7 @@ class StringHelper
 
                     break;
                 case is_numeric($r0):
-                    if ($prev !== $connector && !is_numeric($prev)) {
+                    if ($prev !== $connector && ! is_numeric($prev)) {
                         $res[] = $connector;
                     }
                     $res[] = $r0;
@@ -1386,22 +1399,5 @@ class StringHelper
         }
 
         return implode('', $res);
-    }
-
-    /**
-     * 生成订单号
-     *
-     * @param string $prefix 订单前缀, 例: YM20210220ASD451200
-     * @param string $unique   唯一标识 可填用户ID, 可不填
-     * @return string
-     */
-    public static function getRandomOrderSN(string $prefix = 'DD', int $unique = 0): string
-    {
-        if ($unique !== 0) {
-            $len = (int)(16 - strlen((string)$unique));
-            return  $prefix . date('YmdHis') . NumberHelper::highGenerateNumber($len) . $unique;
-        }
-
-        return $prefix . date('YmdHis') . NumberHelper::highGenerateNumber(16);
     }
 }

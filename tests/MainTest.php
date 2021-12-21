@@ -1,14 +1,13 @@
 <?php
 
 declare(strict_types=1);
-
-use Cexll\Utils\Helper\ArrayHelper;
 use Cexll\Utils\Helper\HashHelper;
-use Cexll\Utils\Helper\NumberHelper;
-use Cexll\Utils\Helper\StringHelper;
-
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 final class MainTest extends TestCase
 {
     public function testFailure()

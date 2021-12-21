@@ -1,12 +1,11 @@
-<?php  
+<?php
 
 declare(strict_types=1);
 
 namespace Cexll\Utils\Helper;
 
-class XmlHelper 
+class XmlHelper
 {
-
     /**
      * 编码
      * @param $data
@@ -23,7 +22,7 @@ class XmlHelper
     /**
      * 解码
      * @param $xml
-     * @return array|null
+     * @return null|array
      */
     public static function decode($xml)
     {
@@ -31,16 +30,16 @@ class XmlHelper
     }
 
     /**
-     * array转xml
+     * array转xml.
      * @param $data
      * @return string
      */
     protected static function arrayToXml($data)
     {
         $xml = '';
-        if (!empty($data)) {
+        if (! empty($data)) {
             foreach ($data as $key => $val) {
-                $xml .= "<$key>";
+                $xml .= "<{$key}>";
                 if (is_array($val)) {
                     $xml .= self::arrayToXml($val);
                 } elseif (is_numeric($val)) {
@@ -48,14 +47,14 @@ class XmlHelper
                 } else {
                     $xml .= self::characterDataReplace($val);
                 }
-                $xml .= "</$key>";
+                $xml .= "</{$key}>";
             }
         }
         return $xml;
     }
 
     /**
-     * 字符数据替换
+     * 字符数据替换.
      * @param $string
      * @return string
      */
@@ -65,15 +64,15 @@ class XmlHelper
     }
 
     /**
-     * xml转array
+     * xml转array.
      * @param $xml
-     * @return array|null
+     * @return null|array
      */
     protected static function xmlToArray($xml)
     {
         $res = [];
         // 如果为空,一般是xml有空格之类的,导致解析失败
-        $data = @(array)simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA | LIBXML_NOBLANKS);
+        $data = @(array) simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA | LIBXML_NOBLANKS);
         if (isset($data[0]) && $data[0] === false) {
             $data = null;
         }
@@ -84,15 +83,14 @@ class XmlHelper
     }
 
     /**
-     * 解析SimpleXMLElement到array
+     * 解析SimpleXMLElement到array.
      * @param $data
-     * @return null
      */
     protected static function parseToArray($data)
     {
         $res = null;
         if (is_object($data)) {
-            $data = (array)$data;
+            $data = (array) $data;
         }
         if (is_array($data)) {
             foreach ($data as $key => $val) {
