@@ -15,11 +15,11 @@ class DateHelper
     public static function smartDatetime($datetime, string $format = 'Y-n-j G:i'): string
     {
         $time = is_numeric($datetime) ? $datetime : strtotime($datetime);
-        $sec = time() - intval($time);
-        $hour = floor($sec / 3600);
+        $sec = time() - (int)($time);
+        $hour = (float)($sec / 3600);
 
         if ($hour === 0) {
-            $min = floor($sec / 60);
+            $min = (float)($sec / 60);
             if ($min === 0) {
                 $res = '刚刚';
             } else {
@@ -28,9 +28,11 @@ class DateHelper
         } elseif ($hour < 24) {
             $res = $hour . '小时前';
         } elseif ($hour < (24 * 30)) {
-            $res = intval($hour / 24) . '天前';
+            $res = (int)($hour / 24) . '天前';
         } elseif ($hour < (24 * 30 * 6)) {
-            $res = intval($hour / (24 * 30)) . '月前';
+            $res = (int)($hour / (24 * 30)) . '月前';
+        } elseif ($hour < (24 * 365 * 6)) {
+            $res = (int) ($hour / (24 * 365)) . '年前';
         } else {
             $res = date($format, $time);
         }
@@ -396,7 +398,7 @@ class DateHelper
         $year = (int) substr($datetime, 0, 4);
         $month = (int) substr($datetime, 5, 2);
         $day = (int) substr($datetime, 8, 2);
-        $week = ($day + 2 * $month + 3 * ($month + 1) / 5 + $year + $year / 4 - $year / 100 + $year / 400) % 7;
+        $week = (int)(($day + 2 * $month + 3 * ($month + 1) / 5 + $year + $year / 4 - $year / 100 + $year / 400) % 7);
         return self::numberToWeek($week + 1);
     }
 
