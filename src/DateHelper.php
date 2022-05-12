@@ -16,10 +16,10 @@ class DateHelper
     {
         $time = is_numeric($datetime) ? $datetime : strtotime($datetime);
         $sec = time() - (int)($time);
-        $hour = (float)($sec / 3600);
+        $hour = (int)($sec / 3600);
 
         if ($hour === 0) {
-            $min = (float)($sec / 60);
+            $min = (int)($sec / 60);
             if ($min === 0) {
                 $res = '刚刚';
             } else {
